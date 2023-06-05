@@ -1,0 +1,182 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\usepackage[english, russian]{babel}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[normalem]{ulem}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\textbf{Лекция 9.3}
+
+\uline{Замечание:} Идея квазиньютоновых методов:
+
+\[H^{- 1}\left( {\overrightarrow{x}}^{(k + 1)} \right) \approx w\eta^{(k + 1)} = w\left( \eta^{(k)} + \ \mathrm{\Delta}\eta^{(k)} \right)\ \ (3)\]
+
+Где \(\eta^{(k)}\) -- матрица аппроксимации
+\(H^{- 1}\left( {\overrightarrow{x}}^{(k + 1)} \right)\)
+
+\uline{Замечание:} \(\mathrm{\Delta}\eta^{(k)}\) -- некоторая
+вычисленная на каждом \(k\) -ом шаге матрица, \(w\) как правило равна 1
+
+\uline{Важно:} Выбор метода в классе квазиньютоновых методов
+определяется способом выбора или вычисления
+\(\ \mathrm{\Delta}\eta^{(k)}\)
+
+\uline{Замечание:}
+
+\begin{enumerate}
+\def\labelenumi{\alph{enumi})}
+\item
+  Для обеспечения сходимости квазиньютоновского метода
+  \(w\eta^{(k + 1)}\) должна быть положительно определена.
+\item
+  На (\(k + 1) - м\) шаге мы знаем
+  \(\left( {\overrightarrow{x}}^{(k)} \right),\ \overrightarrow{\nabla}(f({\overrightarrow{x}}^{(k + 1)}))\)
+  и \(\eta^{(k)}\), надо вычислить \(\eta^{(k + 1)}\), при этом должно
+  выполняться соотношение (2), тогда из (2) с учетом (3) получим:
+\end{enumerate}
+
+\(\mathrm{\Delta}{\overrightarrow{x}}^{(k)} = w\eta^{(k + 1)}*\ \left\lbrack \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k + 1)} \right) - \ \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k)} \right) \right\rbrack = w\ \eta^{(k + 1)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}\)~~~,
+тогда получим
+
+\(\eta^{(k + 1)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} = \frac{1}{w}\ \mathrm{\Delta}{\overrightarrow{x}}^{(k)}\),
+тогда получим
+\(\eta^{(k + 1)} = \ \eta^{(k)} + \ \mathrm{\Delta}\eta^{(k)}\) ,то (4)
+имеет вид:
+
+\(\eta^{(k + 1)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} = \frac{1}{w}\)
+\(\mathrm{\Delta}{\overrightarrow{x}}^{(k)}\) -
+\(\eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}\) (5)
+
+Решим ур-ие (5) относительно \(\ \mathrm{\Delta}\eta^{(k)}:\)
+
+\[\mathrm{\Delta}\eta^{(k)} = \frac{1}{w}*\ \frac{\mathrm{\Delta}{\overrightarrow{x}}^{(k)}*{\overrightarrow{y}}^{T}}{\left( \overrightarrow{y,\ }\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} \right)} - \ \frac{\eta^{(k)}*\mathrm{\Delta}{\overrightarrow{g}}^{(k)}*\ {\overrightarrow{z}}^{T}}{\left( \overrightarrow{z,\ }\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} \right)}\]
+
+Где \(\overrightarrow{y},\ \overrightarrow{z\ }\) - произвольные векторы
+размерности \(n.\)
+
+\uline{Метод Бройдена:}
+
+\(w = 1\), выбирается линейная комбинация двух направлений
+
+\(\mathrm{\Delta}{\overrightarrow{x}}^{(k)}\) и
+\(\eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}:\ \ \overrightarrow{y} = \ \overrightarrow{z\ } = \ \)
+\(\mathrm{\Delta}{\overrightarrow{x}}^{(k)} - \ \eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}\)
+
+\uline{Метод Дэвидона-Флетчера-Пауэлла:}
+
+\[\overrightarrow{y} = \mathrm{\Delta}{\overrightarrow{x}}^{(k)},\ \overrightarrow{z} = \ \ \eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}\]
+
+\uline{Метод Бройдена}
+
+Бройден показал, что если \(\mathrm{\Delta}\eta^{(k)}\) -- является
+симметричной матрицей с рангом 1 и выполняется соотношение:
+\(\eta^{(k + 1)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} = \ \mathrm{\Delta}{\overrightarrow{x}}^{(k)}\)
+, где
+
+\(\mathrm{\Delta}{\overrightarrow{x}}^{(k)} = {\overrightarrow{x}}^{(k + 1)} - {\overrightarrow{x}}^{(k)},\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} = \left( \ \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k + 1)} \right) - \ \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k)} \right) \right)\)\emph{,}
+то единственным возможным выбором \(\mathrm{\Delta}\eta^{(k)}\) будет
+следующее соотношение:
+
+\[\mathrm{\Delta}\eta^{(k)} = \frac{\left\lbrack \mathrm{\Delta}{\overrightarrow{x}}^{(k)} - \ \eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} \right\rbrack*{\lbrack\mathrm{\Delta}{\overrightarrow{x}}^{(k)} - \ \eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)}\rbrack}^{T}}{(\left( \mathrm{\Delta}{\overrightarrow{x}}^{(k)} - \ \eta^{(k)}*\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)} \right),\ \mathrm{\Delta}{\overrightarrow{g}}^{(k)})}\ \ \ \ \ (7)\]
+
+\uline{Реализация метода Бройдена (алгоритм)}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Задаем начальное приближение и положительно определенную матрицу
+  \(\eta^{(0)} = E\)
+\item
+  Вычисляем
+\end{enumerate}
+
+\({\overrightarrow{x}}^{(k + 1)} = {\overrightarrow{x}}^{(k)} - \ \lambda^{(k)}*\eta\left( {\overrightarrow{x}}^{(k)} \right)*\overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k)} \right)\),
+так что
+
+\[\lambda^{(k)} = {argmin}_{\lambda}(f\left( {\overrightarrow{x}}^{(k)} - \ \lambda\left( \eta\left( {\overrightarrow{x}}^{(k)} \right),\ \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k)} \right) \right) \right))\]
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Находим очередное приближение матрицы
+\end{enumerate}
+
+\(\eta^{(k + 1)} = \ \eta^{(k)} + \ \mathrm{\Delta}\eta^{(k)}\)\emph{,}
+где \(\mathrm{\Delta}\eta^{(k)}\) находится по (7)
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  Проверим критерий остановки:
+\end{enumerate}
+
+\(\left| \left| \overrightarrow{\nabla}f\left( {\overrightarrow{x}}^{(k + 1)} \right) \right| \right| < e_{1}\)
+или
+\(\left| \left| \mathrm{\Delta}{\overrightarrow{x}}^{(k)} \right| \right| < e_{2}\)
+или \emph{\hfill\break
+}\(\forall i\ :\left| \mathrm{\Delta}{\overrightarrow{x_{i}}}^{(k)} \right| \leq \ e_{3}\)
+, где \(\mathrm{\Delta}{\overrightarrow{x_{i}}}^{(k)},\ i = 1\ldots n\)
+- координаты вектора:
+
+\[\mathrm{\Delta}{\overrightarrow{x}}^{(k)} = \binom{\mathrm{\Delta}{\overrightarrow{x_{1}}}^{(k)}}{\begin{matrix}
+\mathrm{\Delta}{\overrightarrow{x_{2}}}^{(k)} \\
+\begin{matrix}
+\ldots \\
+\mathrm{\Delta}{\overrightarrow{x_{n}}}^{(k)} \\
+\end{matrix} \\
+\end{matrix}}\]
+
+Если п.4 не выполняется, то идем к пункту 2.
+
+\end{document}
